@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Zippcart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">⚡ ZIPPCART</a>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="#">Create</a>
+            <a href="#">Discover</a>
+            <a href="#">Shop</a>
+            <a href="#">About Us</a>
+        </nav>
+        <div class="header-right">
+            <span id="currentTime">10:09</span>
+            <a href="index.html" class="cart-icon">🛒</a>
+        </div>
+    </header>
+
+    <!-- Checkout Content -->
+    <div class="checkout-container">
+        <h1 style="margin-bottom: 32px;">Checkout</h1>
+        
+        <div class="checkout-grid">
+            <!-- Billing Form -->
+            <div class="checkout-form">
+                <h2>Shipping Information</h2>
+                
+                <form id="checkoutForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name *</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name *</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" id="phone" placeholder="+233 XX XXX XXXX" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Delivery Address *</label>
+                        <textarea id="address" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City *</label>
+                            <input type="text" id="city" value="Accra" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Region *</label>
+                            <select id="region" required>
+                                <option value="">Select Region</option>
+                                <option value="Greater Accra" selected>Greater Accra</option>
+                                <option value="Ashanti">Ashanti</option>
+                                <option value="Western">Western</option>
+                                <option value="Eastern">Eastern</option>
+                                <option value="Central">Central</option>
+                                <option value="Northern">Northern</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <h2 style="margin-top: 32px; margin-bottom: 24px;">Payment Method</h2>
+                    
+                    <div class="payment-methods">
+                        <label class="payment-option selected" id="momoOption">
+                            <input type="radio" name="payment" value="momo" checked>
+                            <span>📱 Mobile Money (MoMo)</span>
+                        </label>
+                        
+                        <div class="momo-details active" id="momoDetails">
+                            <div class="form-group">
+                                <label>Select Network *</label>
+                                <select id="network">
+                                    <option value="MTN">MTN Mobile Money</option>
+                                    <option value="Vodafone">Vodafone Cash</option>
+                                    <option value="AirtelTigo">AirtelTigo Money</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>MoMo Number *</label>
+                                <input type="tel" id="momoNumber" placeholder="XXX XXX XXXX">
+                            </div>
+                        </div>
+                        
+                        <label class="payment-option" id="cardOption">
+                            <input type="radio" name="payment" value="card">
+                            <span>💳 Credit / Debit Card</span>
+                        </label>
+                        
+                        <div class="momo-details" id="cardDetails">
+                            <div class="form-group">
+                                <label>Card Number</label>
+                                <input type="text" placeholder="XXXX XXXX XXXX XXXX">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Expiry</label>
+                                    <input type="text" placeholder="MM/YY">
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV</label>
+                                    <input type="text" placeholder="XXX">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="cash">
+                            <span>💵 Cash on Delivery</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div class="summary-items" id="summaryItems">
+                    <!-- Items will be populated here -->
+                </div>
+                <div class="summary-total">
+                    <span>Total:</span>
+                    <span id="summaryTotal">₵0.00</span>
+                </div>
+                <button class="place-order-btn" id="placeOrderBtn">Place Order</button>
+                <p style="text-align: center; margin-top: 16px; color: #777; font-size: 14px;">
+                    You will receive a payment prompt on your phone
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load cart from localStorage
+        const cart = JSON.parse(localStorage.getItem('zippcart')) || [];
+        const formatter = new Intl.NumberFormat('en-GH', {
+            style: 'currency',
+            currency: 'GHS'
+        });
+        
+        // Payment toggle
+        const momoOption = document.getElementById('momoOption');
+        const cardOption = document.getElementById('cardOption');
+        const momoDetails = document.getElementById('momoDetails');
+        const cardDetails = document.getElementById('cardDetails');
+        const paymentRadios = document.querySelectorAll('input[name="payment"]');
+        
+        paymentRadios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+                e.target.closest('.payment-option').classList.add('selected');
+                
+                momoDetails.classList.remove('active');
+                cardDetails.classList.remove('active');
+                
+                if (e.target.value === 'momo') {
+                    momoDetails.classList.add('active');
+                } else if (e.target.value === 'card') {
+                    cardDetails.classList.add('active');
+                }
+            });
+        });
+        
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('currentTime').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Render order summary
+        function renderSummary() {
+            const summaryItems = document.getElementById('summaryItems');
+            const summaryTotal = document.getElementById('summaryTotal');
+            
+            if (cart.length === 0) {
+                summaryItems.innerHTML = '<p style="color: #999; text-align: center;">Your cart is empty</p>';
+                summaryTotal.textContent = formatter.format(0);
+                return;
+            }
+            
+            let html = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                html += `
+                    <div class="summary-item">
+                        <span>${item.quantity}x ${item.name.substring(0, 20)}...</span>
+                        <span>${formatter.format(itemTotal)}</span>
+                    </div>
+                `;
+            });
+            
+            // Add delivery fee
+            html += `
+                <div class="summary-item">
+                    <span>Delivery Fee</span>
+                    <span>${formatter.format(5.00)}</span>
+                </div>
+            `;
+            total += 5.00;
+            
+            summaryItems.innerHTML = html;
+            summaryTotal.textContent = formatter.format(total);
+        }
+        
+        renderSummary();
+        
+        // Place order
+        document.getElementById('placeOrderBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Validate form
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            
+            if (!firstName || !lastName || !email || !phone || !address) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            if (cart.length === 0) {
+                alert('Your cart is empty');
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Get selected payment method
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            let paymentDetails = '';
+            
+            if (paymentMethod === 'momo') {
+                const network = document.getElementById('network').value;
+                const momoNumber = document.getElementById('momoNumber').value;
+                if (!momoNumber) {
+                    alert('Please enter your Mobile Money number');
+                    return;
+                }
+                paymentDetails = `${network}: ${momoNumber}`;
+            }
+            
+            // Create order object
+            const order = {
+                customer: { firstName, lastName, email, phone, address },
+                items: cart,
+                payment: { method: paymentMethod, details: paymentDetails },
+                orderDate: new Date().toISOString(),
+                orderNumber: 'ZIP-' + Date.now().toString().slice(-8)
+            };
+            
+            console.log('Order placed:', order);
+            
+            // Show success message
+            alert(`✅ Order Placed Successfully!\n\nOrder #${order.orderNumber}\n\nYou will receive a payment prompt on your phone shortly.\n\nThank you for shopping with Zippcart!`);
+            
+            // Clear cart
+            localStorage.removeItem('zippcart');
+            
+            // Redirect to home
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

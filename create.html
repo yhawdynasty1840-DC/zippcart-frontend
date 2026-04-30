@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="create.html">Create</a>
+    <a href="discover.html">Discover</a>
+    <a href="#">Shop</a>
+    <a href="about.html">About Us</a>
+</nav>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create - Sell on Zippcart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .create-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 32px;
+        }
+        
+        .create-hero {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        
+        .create-hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .create-hero p {
+            font-size: 20px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-bottom: 64px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 12px;
+            font-size: 20px;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .seller-form {
+            background: white;
+            padding: 48px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .seller-form h2 {
+            text-align: center;
+            margin-bottom: 32px;
+            font-size: 28px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.02);
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">⚡ ZIPPCART</a>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="create.html" class="active">Create</a>
+            <a href="discover.html">Discover</a>
+            <a href="#">Shop</a>
+            <a href="about.html">About Us</a>
+        </nav>
+        <div class="header-right">
+            <span id="currentTime">10:09</span>
+            <a href="index.html" class="cart-icon">🛒</a>
+        </div>
+    </header>
+
+    <div class="create-container">
+        <div class="create-hero">
+            <h1>Sell on Zippcart</h1>
+            <p>Join thousands of Ghanaian sellers reaching millions of customers across the country</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Low Commission</h3>
+                <p>Keep more of your earnings with our industry-low 5% commission rate</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚚</div>
+                <h3>Delivery Network</h3>
+                <p>Access our nationwide delivery partners at discounted rates</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Money Ready</h3>
+                <p>Get paid instantly via MTN, Vodafone, and AirtelTigo Mobile Money</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Seller Dashboard</h3>
+                <p>Track sales, inventory, and customer insights in real-time</p>
+            </div>
+        </div>
+        
+        <div class="seller-form">
+            <h2>Start Selling Today</h2>
+            <form id="sellerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Business Name *</label>
+                        <input type="text" placeholder="Your shop name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Business Type *</label>
+                        <select required>
+                            <option value="">Select type</option>
+                            <option value="individual">Individual Seller</option>
+                            <option value="registered">Registered Business</option>
+                            <option value="manufacturer">Manufacturer</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Contact Person *</label>
+                        <input type="text" placeholder="Full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" placeholder="+233 XX XXX XXXX" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" placeholder="business@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>What do you sell? *</label>
+                    <textarea rows="3" placeholder="Tell us about your products (e.g., Electronics, Fashion, Home Goods)" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Estimated monthly sales volume</label>
+                    <select>
+                        <option>Less than 50 items</option>
+                        <option>50 - 200 items</option>
+                        <option>200 - 500 items</option>
+                        <option>500+ items</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Application →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>ZIPPCART is a modern online shopping center for speed and convenience.</p>
+        <p style="margin-top: 8px;">© 2024 Zippcart. We help Ghanaian shop smarter.</p>
+    </footer>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('currentTime').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        document.getElementById('sellerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('✅ Application Submitted!\n\nOur team will contact you within 24 hours to complete your seller registration.');
+        });
+    </script>
+</body>
+</html>

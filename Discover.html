@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="create.html">Create</a>
+    <a href="discover.html">Discover</a>
+    <a href="#">Shop</a>
+    <a href="about.html">About Us</a>
+</nav>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover - Zippcart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .discover-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+        
+        .discover-hero {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 24px;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+        
+        .discover-hero h1 {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .trending-section,
+        .new-section,
+        .categories-section {
+            margin-bottom: 64px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .section-header h2 {
+            font-size: 28px;
+        }
+        
+        .view-all {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .trending-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .trending-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        
+        .trending-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        
+        .trending-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .trending-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .trending-price {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+        }
+        
+        .category-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .category-card:hover {
+            border-color: #667eea;
+        }
+        
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+        
+        .category-card h4 {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .deal-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+        
+        .deal-content h3 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .deal-timer {
+            font-size: 24px;
+            font-weight: 700;
+            background: rgba(255,255,255,0.2);
+            padding: 12px 24px;
+            border-radius: 40px;
+        }
+        
+        .shop-now-btn {
+            background: white;
+            color: #667eea;
+            padding: 16px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+        
+        .shop-now-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">⚡ ZIPPCART</a>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="create.html">Create</a>
+            <a href="discover.html" class="active">Discover</a>
+            <a href="#">Shop</a>
+            <a href="about.html">About Us</a>
+        </nav>
+        <div class="header-right">
+            <span id="currentTime">10:09</span>
+            <a href="index.html" class="cart-icon">🛒</a>
+        </div>
+    </header>
+
+    <div class="discover-container">
+        <div class="discover-hero">
+            <h1>Discover Amazing Deals</h1>
+            <p>Find trending products, exclusive offers, and new arrivals daily</p>
+        </div>
+        
+        <!-- Flash Deal Banner -->
+        <div class="deal-banner">
+            <div class="deal-content">
+                <h3>⚡ Flash Sale Ending Soon!</h3>
+                <p>Up to 50% off on selected items</p>
+            </div>
+            <div class="deal-timer" id="dealTimer">02:45:30</div>
+            <a href="index.html" class="shop-now-btn">Shop Now →</a>
+        </div>
+        
+        <!-- Trending Now -->
+        <div class="trending-section">
+            <div class="section-header">
+                <h2>🔥 Trending Now in Ghana</h2>
+                <a href="#" class="view-all">View All →</a>
+            </div>
+            <div class="trending-grid">
+                <div class="trending-card" onclick="window.location.href='index.html'">
+                    <div class="trending-icon">⌚</div>
+                    <h3>Smart Watches</h3>
+                    <span class="trending-price">From ₵180</span>
+                </div>
+                <div class="trending-card" onclick="window.location.href='index.html'">
+                    <div class="trending-icon">🎧</div>
+                    <h3>Wireless Earbuds</h3>
+                    <span class="trending-price">From ₵85</span>
+                </div>
+                <div class="trending-card" onclick="window.location.href='index.html'">
+                    <div class="trending-icon">📱</div>
+                    <h3>Phone Accessories</h3>
+                    <span class="trending-price">From ₵25</span>
+                </div>
+                <div class="trending-card" onclick="window.location.href='index.html'">
+                    <div class="trending-icon">🔋</div>
+                    <h3>Power Banks</h3>
+                    <span class="trending-price">From ₵120</span>
+                </div>
+                <div class="trending-card" onclick="window.location.href='index.html'">
+                    <div class="trending-icon">📷</div>
+                    <h3>Action Cameras</h3>
+                    <span class="trending-price">From ₵450</span>
+                </div>
+                <div class="trending-card" onclick="window.location.href='index.html'">
+                    <div class="trending-icon">💻</div>
+                    <h3>Laptops</h3>
+                    <span class="trending-price">From ₵2,500</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Shop by Category -->
+        <div class="categories-section">
+            <div class="section-header">
+                <h2>📂 Shop by Category</h2>
+                <a href="#" class="view-all">All Categories →</a>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" onclick="window.location.href='index.html'">
+                    <div class="category-icon">📱</div>
+                    <h4>Electronics</h4>
+                </div>
+                <div class="category-card" onclick="window.location.href='index.html'">
+                    <div class="category-icon">👕</div>
+                    <h4>Fashion</h4>
+                </div>
+                <div class="category-card" onclick="window.location.href='index.html'">
+                    <div class="category-icon">🏠</div>
+                    <h4>Home & Living</h4>
+                </div>
+                <div class="category-card" onclick="window.location.href='index.html'">
+                    <div class="category-icon">💄</div>
+                    <h4>Beauty</h4>
+                </div>
+                <div class="category-card" onclick="window.location.href='index.html'">
+                    <div class="category-icon">🏋️</div>
+                    <h4>Sports</h4>
+                </div>
+                <div class="category-card" onclick="window.location.href='index.html'">
+                    <div class="category-icon">📚</div>
+                    <h4>Books</h4>
+                </div>
+            </div>
+        </div>
+        
+        <!-- New Arrivals -->
+        <div class="new-section">
+            <div class="section-header">
+                <h2>✨ New Arrivals</h2>
+                <a href="#" class="view-all">View All →</a>
+            </div>
+            <div class="product-grid" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="product-card" onclick="window.location.href='index.html'">
+                    <div class="product-image">🎮</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Gaming Controller Pro</h3>
+                        <p class="product-specs">Wireless • Dual Vibration</p>
+                        <div class="price-section">
+                            <span class="price">₵320.00</span>
+                            <span class="interest-badge">NEW</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="window.location.href='index.html'">
+                    <div class="product-image">🔊</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Bluetooth Speaker</h3>
+                        <p class="product-specs">20W • Waterproof • 12hr Play</p>
+                        <div class="price-section">
+                            <span class="price">₵195.00</span>
+                            <span class="interest-badge">NEW</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="window.location.href='index.html'">
+                    <div class="product-image">⌚</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Fitness Tracker Band</h3>
+                        <p class="product-specs">Heart Rate • Sleep Monitor</p>
+                        <div class="price-section">
+                            <span class="price">₵145.00</span>
+                            <span class="interest-badge">NEW</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="window.location.href='index.html'">
+                    <div class="product-image">💡</div>
+                    <div class="product-info">
+                        <h3 class="product-title">Smart LED Bulb</h3>
+                        <p class="product-specs">WiFi • Voice Control</p>
+                        <div class="price-section">
+                            <span class="price">₵75.00</span>
+                            <span class="interest-badge">NEW</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>ZIPPCART is a modern online shopping center for speed and convenience.</p>
+        <p style="margin-top: 8px;">© 2024 Zippcart. We help Ghanaian shop smarter.</p>
+    </footer>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('currentTime').textContent = `${hours}:${minutes}`;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // Countdown Timer
+        function startTimer() {
+            let time = 2 * 3600 + 45 * 60 + 30; // 2:45:30
+            
+            setInterval(() => {
+                const hours = Math.floor(time / 3600);
+                const minutes = Math.floor((time % 3600) / 60);
+                const seconds = time % 60;
+                
+                document.getElementById('dealTimer').textContent = 
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                if (time > 0) time--;
+            }, 1000);
+        }
+        startTimer();
+    </script>
+</body>
+</html>
