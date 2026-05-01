@@ -197,7 +197,6 @@
         }
         .no-results { text-align: center; padding: 48px; color: #999; }
 
-        /* ==================== MOBILE RESPONSIVE ==================== */
         @media (max-width: 768px) {
             .nav { display: none; }
             .hero h1 { font-size: 26px; }
@@ -241,59 +240,29 @@
 </head>
 <body>
 
-    <!-- Cart Overlay & Sidebar -->
     <div class="cart-overlay" id="cartOverlay"></div>
     <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h2>Your Cart</h2>
-            <button class="close-cart" id="closeCart">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <div class="empty-cart-message">Your cart is empty</div>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total"><span>Total:</span><span id="cartTotal">₵0.00</span></div>
-            <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
-        </div>
+        <div class="cart-header"><h2>Your Cart</h2><button class="close-cart" id="closeCart">&times;</button></div>
+        <div class="cart-items" id="cartItems"><div class="empty-cart-message">Your cart is empty</div></div>
+        <div class="cart-footer"><div class="cart-total"><span>Total:</span><span id="cartTotal">₵0.00</span></div><button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button></div>
     </div>
 
-    <!-- Product Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <div class="modal-content" id="modalContent"></div>
-        </div>
-    </div>
+    <div class="modal-overlay" id="modalOverlay"><div class="modal"><button class="modal-close" id="modalClose">&times;</button><div class="modal-content" id="modalContent"></div></div></div>
 
-    <!-- Auth Modal -->
     <div class="modal-overlay" id="authModalOverlay">
-        <div class="modal" style="max-width: 400px;">
-            <button class="modal-close" onclick="closeAuthModal()">&times;</button>
-            <div style="padding: 32px;">
-                <h2 id="authTitle" style="text-align: center; margin-bottom: 24px;">Sign In</h2>
+        <div class="modal" style="max-width:400px;"><button class="modal-close" onclick="closeAuthModal()">&times;</button>
+            <div style="padding:32px;"><h2 id="authTitle" style="text-align:center;margin-bottom:24px;">Sign In</h2>
                 <form id="authForm" onsubmit="handleAuth(event)">
-                    <div class="form-group" id="nameField" style="display: none;">
-                        <label>Name</label>
-                        <input type="text" id="authName" placeholder="Your name">
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="authEmail" required placeholder="your@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="authPassword" required placeholder="Password">
-                    </div>
-                    <button type="submit" class="add-to-cart-btn" style="width: 100%; padding: 14px;" id="authSubmitBtn">Sign In</button>
+                    <div class="form-group" id="nameField" style="display:none;"><label>Name</label><input type="text" id="authName" placeholder="Your name"></div>
+                    <div class="form-group"><label>Email</label><input type="email" id="authEmail" required placeholder="your@email.com"></div>
+                    <div class="form-group"><label>Password</label><input type="password" id="authPassword" required placeholder="Password"></div>
+                    <button type="submit" class="add-to-cart-btn" style="width:100%;padding:14px;" id="authSubmitBtn">Sign In</button>
                 </form>
-                <p style="text-align: center; margin-top: 16px;">
-                    <a onclick="toggleAuthMode()" style="color: #667eea; cursor: pointer;" id="authToggleLink">Create an account</a>
-                </p>
+                <p style="text-align:center;margin-top:16px;"><a onclick="toggleAuthMode()" style="color:#667eea;cursor:pointer;" id="authToggleLink">Create an account</a></p>
             </div>
         </div>
     </div>
 
-    <!-- Header -->
     <header class="header">
         <div class="logo" onclick="navigateTo('home')">⚡ ZIPPCART</div>
         <nav class="nav">
@@ -304,40 +273,24 @@
             <a onclick="navigateTo('about')" id="nav-about">About Us</a>
         </nav>
         <div class="header-right">
-            <a id="authBtn" class="nav-link" style="cursor: pointer; margin-right: 8px;" onclick="showAuthModal()">Sign In</a>
-            <div class="search-container">
-                <span class="search-icon">🔍</span>
-                <input type="text" class="search-input" id="searchInput" placeholder="Search products...">
-            </div>
+            <a id="authBtn" class="nav-link" style="cursor:pointer;margin-right:8px;" onclick="showAuthModal()">Sign In</a>
+            <div class="search-container"><span class="search-icon">🔍</span><input type="text" class="search-input" id="searchInput" placeholder="Search products..."></div>
             <span id="currentTime">10:09</span>
             <div class="cart-icon" id="cartIcon">🛒<span class="cart-count" id="cartCount">0</span></div>
         </div>
     </header>
 
-    <!-- HOME PAGE -->
     <div class="page active" id="page-home">
-        <section class="hero">
-            <h1>The fastest way to fill your cart</h1>
-            <p>Just zip, click, and it's at your door. Smart shopping for Ghana.</p>
-        </section>
+        <section class="hero"><h1>The fastest way to fill your cart</h1><p>Just zip, click, and it's at your door. Smart shopping for Ghana.</p></section>
         <div class="container">
-            <div class="filter-bar">
-                <button class="filter-btn active" data-filter="all">All Products</button>
-                <button class="filter-btn" data-filter="full-hd">Full HD</button>
-                <button class="filter-btn" data-filter="hd-ready">HD Ready</button>
-                <button class="filter-btn" data-filter="4k-uhd">4K UHD Ready</button>
-            </div>
+            <div class="filter-bar"><button class="filter-btn active" data-filter="all">All Products</button><button class="filter-btn" data-filter="full-hd">Full HD</button><button class="filter-btn" data-filter="hd-ready">HD Ready</button><button class="filter-btn" data-filter="4k-uhd">4K UHD Ready</button></div>
             <div class="product-grid" id="productGrid"></div>
         </div>
     </div>
 
-    <!-- CREATE PAGE -->
     <div class="page" id="page-create">
         <div class="create-container">
-            <div class="create-hero">
-                <h1>Sell on Zippcart</h1>
-                <p style="color: #666; font-size: 20px; margin-top: 16px;">Join thousands of Ghanaian sellers reaching millions of customers</p>
-            </div>
+            <div class="create-hero"><h1>Sell on Zippcart</h1><p style="color:#666;font-size:20px;margin-top:16px;">Join thousands of Ghanaian sellers</p></div>
             <div class="features-grid">
                 <div class="feature-card"><div class="feature-icon">💰</div><h3>Low Commission</h3><p>Keep more with 5% commission</p></div>
                 <div class="feature-card"><div class="feature-icon">🚚</div><h3>Delivery Network</h3><p>Nationwide delivery partners</p></div>
@@ -345,16 +298,10 @@
                 <div class="feature-card"><div class="feature-icon">📊</div><h3>Seller Dashboard</h3><p>Track sales and inventory</p></div>
             </div>
             <div class="seller-form">
-                <h2 style="text-align: center; margin-bottom: 32px;">Start Selling Today</h2>
+                <h2 style="text-align:center;margin-bottom:32px;">Start Selling Today</h2>
                 <form id="sellerForm">
-                    <div class="form-row">
-                        <div class="form-group"><label>Business Name *</label><input type="text" placeholder="Your shop name"></div>
-                        <div class="form-group"><label>Business Type *</label><select><option>Individual Seller</option><option>Registered Business</option><option>Manufacturer</option></select></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Contact Person *</label><input type="text" placeholder="Full name"></div>
-                        <div class="form-group"><label>Phone Number *</label><input type="tel" placeholder="+233 XX XXX XXXX"></div>
-                    </div>
+                    <div class="form-row"><div class="form-group"><label>Business Name *</label><input type="text" placeholder="Your shop name"></div><div class="form-group"><label>Business Type *</label><select><option>Individual Seller</option><option>Registered Business</option><option>Manufacturer</option></select></div></div>
+                    <div class="form-row"><div class="form-group"><label>Contact Person *</label><input type="text" placeholder="Full name"></div><div class="form-group"><label>Phone Number *</label><input type="tel" placeholder="+233 XX XXX XXXX"></div></div>
                     <div class="form-group"><label>Email Address *</label><input type="email" placeholder="business@example.com"></div>
                     <div class="form-group"><label>What do you sell? *</label><textarea rows="3" placeholder="Tell us about your products"></textarea></div>
                     <button type="submit" class="submit-btn">Submit Application →</button>
@@ -363,11 +310,10 @@
         </div>
     </div>
 
-    <!-- DISCOVER PAGE -->
     <div class="page" id="page-discover">
         <div class="discover-container">
-            <div class="discover-hero"><h1>Discover Amazing Deals</h1><p style="opacity: 0.9;">Trending products and new arrivals daily</p></div>
-            <h2 style="margin-bottom: 24px;">🔥 Trending Now in Ghana</h2>
+            <div class="discover-hero"><h1>Discover Amazing Deals</h1><p style="opacity:0.9;">Trending products and new arrivals daily</p></div>
+            <h2 style="margin-bottom:24px;">🔥 Trending Now in Ghana</h2>
             <div class="trending-grid">
                 <div class="trending-card" onclick="navigateTo('home')"><div class="trending-icon">⌚</div><h3>Smart Watches</h3><p style="color:#667eea;">From ₵180</p></div>
                 <div class="trending-card" onclick="navigateTo('home')"><div class="trending-icon">🎧</div><h3>Wireless Earbuds</h3><p style="color:#667eea;">From ₵85</p></div>
@@ -379,14 +325,9 @@
         </div>
     </div>
 
-    <!-- ABOUT PAGE -->
     <div class="page" id="page-about">
         <div class="about-container">
-            <div class="about-hero">
-                <h1>About Zippcart</h1>
-                <p style="font-size:24px;color:#667eea;margin-bottom:24px;">The fastest way to fill your cart</p>
-                <p style="font-size:18px;color:#666;max-width:800px;margin:0 auto;">ZIPPCART is a modern online shopping center for speed and convenience. We help Ghanaians shop smarter.</p>
-            </div>
+            <div class="about-hero"><h1>About Zippcart</h1><p style="font-size:24px;color:#667eea;margin-bottom:24px;">The fastest way to fill your cart</p><p style="font-size:18px;color:#666;max-width:800px;margin:0 auto;">ZIPPCART is a modern online shopping center for speed and convenience.</p></div>
             <div class="mission-box"><h2>Our Mission</h2><p style="font-size:20px;">To revolutionize e-commerce in Ghana with fast, reliable shopping and local payment solutions.</p></div>
             <div class="values-grid">
                 <div class="value-card"><div class="value-icon">⚡</div><h3>Speed</h3><p>Lightning-fast browsing and delivery</p></div>
@@ -397,38 +338,27 @@
         </div>
     </div>
 
-    <!-- CHECKOUT PAGE -->
     <div class="page" id="page-checkout">
         <div class="checkout-container">
-            <h1 style="margin-bottom: 32px;">Checkout</h1>
+            <h1 style="margin-bottom:32px;">Checkout</h1>
             <div class="checkout-grid">
                 <div class="checkout-form">
-                    <h2 style="margin-bottom: 24px;">Shipping Information</h2>
+                    <h2 style="margin-bottom:24px;">Shipping Information</h2>
                     <form id="checkoutForm">
-                        <div class="form-row">
-                            <div class="form-group"><label>First Name *</label><input type="text" id="firstName"></div>
-                            <div class="form-group"><label>Last Name *</label><input type="text" id="lastName"></div>
-                        </div>
+                        <div class="form-row"><div class="form-group"><label>First Name *</label><input type="text" id="firstName"></div><div class="form-group"><label>Last Name *</label><input type="text" id="lastName"></div></div>
                         <div class="form-group"><label>Email *</label><input type="email" id="email"></div>
                         <div class="form-group"><label>Phone *</label><input type="tel" id="phone" placeholder="+233 XX XXX XXXX"></div>
                         <div class="form-group"><label>Address *</label><textarea id="address" rows="3"></textarea></div>
-                        <div class="form-row">
-                            <div class="form-group"><label>City *</label><input type="text" id="city" value="Accra"></div>
-                            <div class="form-group"><label>Region *</label><select id="region"><option>Greater Accra</option><option>Ashanti</option><option>Western</option><option>Eastern</option><option>Central</option><option>Northern</option></select></div>
-                        </div>
+                        <div class="form-row"><div class="form-group"><label>City *</label><input type="text" id="city" value="Accra"></div><div class="form-group"><label>Region *</label><select id="region"><option>Greater Accra</option><option>Ashanti</option><option>Western</option><option>Eastern</option><option>Central</option><option>Northern</option></select></div></div>
                         <h2 style="margin:32px 0 24px;">Payment Method</h2>
                         <div class="payment-option selected"><input type="radio" name="payment" value="momo" checked> 📱 Mobile Money (MoMo)</div>
-                        <div class="momo-details active" id="momoDetails">
-                            <div class="form-group"><label>Network *</label><select id="network"><option>MTN Mobile Money</option><option>Vodafone Cash</option><option>AirtelTigo Money</option></select></div>
-                            <div class="form-group"><label>MoMo Number *</label><input type="tel" id="momoNumber" placeholder="XXX XXX XXXX"></div>
-                        </div>
+                        <div class="momo-details active" id="momoDetails"><div class="form-group"><label>Network *</label><select id="network"><option>MTN Mobile Money</option><option>Vodafone Cash</option><option>AirtelTigo Money</option></select></div><div class="form-group"><label>MoMo Number *</label><input type="tel" id="momoNumber" placeholder="XXX XXX XXXX"></div></div>
                         <div class="payment-option"><input type="radio" name="payment" value="card"> 💳 Credit / Debit Card</div>
                         <div class="payment-option"><input type="radio" name="payment" value="cash"> 💵 Cash on Delivery</div>
                     </form>
                 </div>
                 <div class="order-summary">
-                    <h3>Order Summary</h3>
-                    <div class="summary-items" id="summaryItems"></div>
+                    <h3>Order Summary</h3><div class="summary-items" id="summaryItems"></div>
                     <div class="summary-total" style="display:flex;justify-content:space-between;padding-top:16px;border-top:2px solid #e5e5e5;"><span>Total:</span><span id="summaryTotal">₵0.00</span></div>
                     <button class="place-order-btn" id="placeOrderBtn">Place Order</button>
                     <p style="text-align:center;margin-top:16px;color:#777;font-size:14px;">You will receive a payment prompt on your phone</p>
@@ -438,33 +368,41 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>ZIPPCART is a modern online shopping center for speed and convenience.</p>
-        <p style="margin-top: 8px;">© 2024 Zippcart. We help Ghanaian shop smarter.</p>
-    </footer>
+    <!-- ADMIN DASHBOARD -->
+    <div class="page" id="page-admin">
+        <div class="container" style="max-width:1400px;margin:0 auto;padding:32px;">
+            <h1 style="margin-bottom:32px;">📊 Admin Dashboard</h1>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:40px;" id="adminStats">
+                <div class="stat-card" style="background:white;padding:24px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);"><div style="font-size:14px;color:#777;margin-bottom:8px;">👥 Total Visitors</div><div style="font-size:36px;font-weight:700;color:#667eea;" id="statVisitors">0</div></div>
+                <div class="stat-card" style="background:white;padding:24px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);"><div style="font-size:14px;color:#777;margin-bottom:8px;">📦 Total Orders</div><div style="font-size:36px;font-weight:700;color:#28a745;" id="statOrders">0</div></div>
+                <div class="stat-card" style="background:white;padding:24px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);"><div style="font-size:14px;color:#777;margin-bottom:8px;">💰 Total Revenue</div><div style="font-size:36px;font-weight:700;color:#ffc107;" id="statRevenue">₵0</div></div>
+                <div class="stat-card" style="background:white;padding:24px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);"><div style="font-size:14px;color:#777;margin-bottom:8px;">⏳ Pending Sellers</div><div style="font-size:36px;font-weight:700;color:#dc3545;" id="statPending">0</div></div>
+            </div>
+            <div style="background:white;padding:24px;border-radius:12px;margin-bottom:32px;box-shadow:0 2px 8px rgba(0,0,0,0.04);"><h2 style="margin-bottom:20px;">⏳ Pending Seller Approvals</h2><div id="pendingSellersList" style="display:flex;flex-direction:column;gap:12px;"><p style="color:#999;">No pending sellers</p></div></div>
+            <div style="background:white;padding:24px;border-radius:12px;margin-bottom:32px;box-shadow:0 2px 8px rgba(0,0,0,0.04);"><h2 style="margin-bottom:20px;">📋 Recent Orders</h2><div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;" id="ordersTable"><thead><tr style="border-bottom:2px solid #e5e5e5;text-align:left;"><th style="padding:12px;">Order #</th><th style="padding:12px;">Customer</th><th style="padding:12px;">Items</th><th style="padding:12px;">Total</th><th style="padding:12px;">Payment</th><th style="padding:12px;">Status</th><th style="padding:12px;">Date</th></tr></thead><tbody id="ordersTableBody"><tr><td colspan="7" style="padding:24px;text-align:center;color:#999;">Loading orders...</td></tr></tbody></table></div></div>
+            <div style="background:white;padding:24px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);"><h2 style="margin-bottom:20px;">👣 Recent Visitor Activity</h2><div id="visitorLog" style="max-height:400px;overflow-y:auto;"><p style="color:#999;">Loading visitors...</p></div></div>
+        </div>
+    </div>
+
+    <footer class="footer"><p>ZIPPCART is a modern online shopping center for speed and convenience.</p><p style="margin-top:8px;">© 2024 Zippcart. We help Ghanaian shop smarter.</p></footer>
 
     <script>
-        // ==================== API CONFIGURATION ====================
         const API_URL = 'https://zippcart-api.onrender.com/api';
         let authToken = localStorage.getItem('zippcart_token') || '';
         let currentUser = JSON.parse(localStorage.getItem('zippcart_user') || 'null');
 
         function setAuth(token, user) {
-            authToken = token;
-            currentUser = user;
+            authToken = token; currentUser = user;
             localStorage.setItem('zippcart_token', token);
             localStorage.setItem('zippcart_user', JSON.stringify(user));
             updateAuthUI();
         }
 
         function logout() {
-            authToken = '';
-            currentUser = null;
+            authToken = ''; currentUser = null;
             localStorage.removeItem('zippcart_token');
             localStorage.removeItem('zippcart_user');
-            updateAuthUI();
-            navigateTo('home');
+            updateAuthUI(); navigateTo('home');
         }
 
         function updateAuthUI() {
@@ -473,15 +411,24 @@
             if (currentUser) {
                 authBtn.textContent = `👤 ${currentUser.name}`;
                 authBtn.onclick = () => { if (confirm('Logout?')) logout(); };
+                if (currentUser.role === 'admin') {
+                    const nav = document.querySelector('.nav');
+                    if (!document.getElementById('nav-admin')) {
+                        const al = document.createElement('a');
+                        al.id = 'nav-admin'; al.onclick = () => navigateTo('admin');
+                        al.textContent = '📊 Admin'; al.style.color = '#dc3545';
+                        nav.appendChild(al);
+                    }
+                }
             } else {
                 authBtn.textContent = 'Sign In';
                 authBtn.onclick = () => showAuthModal();
+                const al = document.getElementById('nav-admin');
+                if (al) al.remove();
             }
         }
 
-        // ==================== AUTH MODAL ====================
         let authMode = 'login';
-
         function showAuthModal() {
             authMode = 'login';
             document.getElementById('authTitle').textContent = 'Sign In';
@@ -491,7 +438,6 @@
             document.getElementById('authModalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function showSignupModal() {
             authMode = 'signup';
             document.getElementById('authTitle').textContent = 'Create Account';
@@ -501,20 +447,11 @@
             document.getElementById('authModalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeAuthModal() {
             document.getElementById('authModalOverlay').classList.remove('active');
             document.body.style.overflow = '';
         }
-
-        function toggleAuthMode() {
-            if (authMode === 'login') {
-                showSignupModal();
-            } else {
-                showAuthModal();
-            }
-        }
-
+        function toggleAuthMode() { authMode === 'login' ? showSignupModal() : showAuthModal(); }
         async function handleAuth(event) {
             event.preventDefault();
             const email = document.getElementById('authEmail').value;
@@ -523,236 +460,123 @@
             const endpoint = authMode === 'login' ? '/login' : '/signup';
             const body = authMode === 'login' ? { email, password } : { name, email, password };
             try {
-                const res = await fetch(`https://zippcart-api.onrender.com/api${endpoint}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
-                });
+                const res = await fetch(`https://zippcart-api.onrender.com/api${endpoint}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
                 const data = await res.json();
-                if (res.ok) {
-                    setAuth(data.token, data.user);
-                    closeAuthModal();
-                    alert(data.message);
-                } else {
-                    alert(data.message);
-                }
-            } catch (error) {
-                alert('Connection error. Please try again.');
-            }
-        }
-
-        // ==================== CHECKOUT WITH LOGIN CHECK ====================
-        function requireLogin(callback) {
-            if (currentUser) {
-                callback();
-            } else {
-                alert('⚠️ Please sign in or create an account to place an order.');
-                showAuthModal();
-                // Store the callback to run after login
-                window._afterLoginCallback = callback;
-            }
+                if (res.ok) { setAuth(data.token, data.user); closeAuthModal(); alert(data.message); }
+                else alert(data.message);
+            } catch (e) { alert('Connection error. Please try again.'); }
         }
 
         async function placeOrderAPI(cartData, customerInfo, paymentMethod) {
-            const total = cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 5;
-            const items = cartData.map(item => ({ name: item.name, price: item.price, quantity: item.quantity }));
+            const total = cartData.reduce((s, i) => s + (i.price * i.quantity), 0) + 5;
+            const items = cartData.map(i => ({ name: i.name, price: i.price, quantity: i.quantity }));
             try {
                 const headers = { 'Content-Type': 'application/json' };
                 if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
-                const res = await fetch('https://zippcart-api.onrender.com/api/orders', {
-                    method: 'POST', headers,
-                    body: JSON.stringify({ items, total, paymentMethod, customerInfo })
-                });
+                const res = await fetch('https://zippcart-api.onrender.com/api/orders', { method: 'POST', headers, body: JSON.stringify({ items, total, paymentMethod, customerInfo }) });
                 return await res.json();
-            } catch (error) {
-                return { message: 'Connection error' };
-            }
+            } catch (e) { return { message: 'Connection error' }; }
         }
 
         function trackVisit(page, action) {
-            fetch('https://zippcart-api.onrender.com/api/track', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ page, action })
-            }).catch(() => {});
+            fetch('https://zippcart-api.onrender.com/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page, action }) }).catch(() => {});
         }
 
-        // ==================== DATA ====================
         const products = [
-            { id: 1, name: "SMOKOLAB 1.83 inch HD Smartwatch", specs: "BT Calling & Check Weather • 1 Count Battery", fullDescription: "Experience the ultimate smartwatch with a vibrant 1.83-inch HD display. Features Bluetooth calling, weather updates, heart rate monitoring, and sleep tracking.", price: 11.47, interest: "2.80% interest-free", image: "", fallbackEmoji: "⌚", category: "full-hd" },
-            { id: 2, name: "Four Flat Polycarbonate Rotatable Enclosure", specs: "Four Dual-Sided Screen • Cable-Free", fullDescription: "Premium polycarbonate rotatable enclosure with four dual-sided screens. Perfect for retail displays and exhibitions.", price: 11.39, interest: "0.38% interest-free", image: "", fallbackEmoji: "📱", category: "hd-ready" },
-            { id: 3, name: "Smartphone Stand For Flat Polycarbonate", specs: "Rotatable Enclosure • Dual-Sided Screen", fullDescription: "Sturdy smartphone stand designed for flat polycarbonate surfaces. Features 360-degree rotation.", price: 89.99, interest: "2.04% interest-free", image: "", fallbackEmoji: "📲", category: "4k-uhd" },
-            { id: 4, name: "Wireless Bluetooth Earbuds Pro", specs: "Noise Cancelling • 40hr Battery Life", fullDescription: "Premium wireless earbuds with active noise cancellation. 40 hours battery life with charging case.", price: 24.99, interest: "0% interest-free", image: "", fallbackEmoji: "🎧", category: "full-hd" },
-            { id: 5, name: "4K Action Camera Waterproof", specs: "4K 60fps • WiFi • 170° Wide Angle", fullDescription: "Capture stunning 4K video at 60fps with this waterproof action camera. Features built-in WiFi.", price: 59.99, interest: "1.5% interest-free", image: "", fallbackEmoji: "📷", category: "4k-uhd" },
-            { id: 6, name: "Portable Power Bank 20000mAh", specs: "Fast Charging • Dual USB • LED Display", fullDescription: "High-capacity 20000mAh power bank with fast charging technology.", price: 19.99, interest: "0% interest-free", image: "", fallbackEmoji: "🔋", category: "hd-ready" }
+            { id: 1, name: "SMOKOLAB 1.83 inch HD Smartwatch", specs: "BT Calling & Check Weather • 1 Count Battery", fullDescription: "Experience the ultimate smartwatch with a vibrant 1.83-inch HD display.", price: 11.47, interest: "2.80% interest-free", image: "", fallbackEmoji: "⌚", category: "full-hd" },
+            { id: 2, name: "Four Flat Polycarbonate Rotatable Enclosure", specs: "Four Dual-Sided Screen • Cable-Free", fullDescription: "Premium polycarbonate rotatable enclosure.", price: 11.39, interest: "0.38% interest-free", image: "", fallbackEmoji: "📱", category: "hd-ready" },
+            { id: 3, name: "Smartphone Stand For Flat Polycarbonate", specs: "Rotatable Enclosure • Dual-Sided Screen", fullDescription: "Sturdy smartphone stand with 360-degree rotation.", price: 89.99, interest: "2.04% interest-free", image: "", fallbackEmoji: "📲", category: "4k-uhd" },
+            { id: 4, name: "Wireless Bluetooth Earbuds Pro", specs: "Noise Cancelling • 40hr Battery Life", fullDescription: "Premium wireless earbuds with ANC.", price: 24.99, interest: "0% interest-free", image: "", fallbackEmoji: "🎧", category: "full-hd" },
+            { id: 5, name: "4K Action Camera Waterproof", specs: "4K 60fps • WiFi • 170° Wide Angle", fullDescription: "Capture stunning 4K video at 60fps.", price: 59.99, interest: "1.5% interest-free", image: "", fallbackEmoji: "📷", category: "4k-uhd" },
+            { id: 6, name: "Portable Power Bank 20000mAh", specs: "Fast Charging • Dual USB • LED Display", fullDescription: "High-capacity 20000mAh power bank.", price: 19.99, interest: "0% interest-free", image: "", fallbackEmoji: "🔋", category: "hd-ready" }
         ];
 
         let cart = JSON.parse(localStorage.getItem('zippcart')) || [];
-        let currentFilter = 'all';
-        let searchQuery = '';
+        let currentFilter = 'all', searchQuery = '';
         const formatter = new Intl.NumberFormat('en-GH', { style: 'currency', currency: 'GHS' });
 
-        // ==================== NAVIGATION ====================
         function navigateTo(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(`page-${page}`).classList.add('active');
             document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
-            const navEl = document.getElementById(`nav-${page}`);
-            if (navEl) navEl.classList.add('active');
+            const nv = document.getElementById(`nav-${page}`);
+            if (nv) nv.classList.add('active');
             window.scrollTo(0, 0);
             if (page === 'home') renderProducts();
             if (page === 'checkout') renderCheckoutSummary();
+            if (page === 'admin') { loadAdminDashboard(); loadPendingSellers(); loadRecentOrders(); loadVisitorLog(); }
             trackVisit(page, 'page_view');
         }
 
-        // ==================== PRODUCT RENDERING ====================
         function getFilteredProducts() {
-            return products.filter(p => {
-                const matchesFilter = currentFilter === 'all' || p.category === currentFilter;
-                const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.specs.toLowerCase().includes(searchQuery.toLowerCase());
-                return matchesFilter && matchesSearch;
-            });
+            return products.filter(p => (currentFilter === 'all' || p.category === currentFilter) && (p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.specs.toLowerCase().includes(searchQuery.toLowerCase())));
         }
 
         function renderProducts() {
-            const filtered = getFilteredProducts();
-            const grid = document.getElementById('productGrid');
-            if (filtered.length === 0) { grid.innerHTML = '<div class="no-results">No products found</div>'; return; }
-            grid.innerHTML = filtered.map(p => `
-                <div class="product-card" onclick="openModal(${p.id})">
-                    <div class="product-image">
-                        ${p.image ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : ''}
-                        <span class="fallback-emoji" style="font-size: 64px; ${p.image ? 'display: none;' : ''}">${p.fallbackEmoji}</span>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-title">${p.name}</h3>
-                        <p class="product-specs">${p.specs}</p>
-                        <div class="price-section"><span class="price">${formatter.format(p.price)}</span><span class="interest-badge">${p.interest}</span></div>
-                        <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Add to Cart</button>
-                    </div>
-                </div>
-            `).join('');
+            const f = getFilteredProducts();
+            const g = document.getElementById('productGrid');
+            if (!f.length) { g.innerHTML = '<div class="no-results">No products found</div>'; return; }
+            g.innerHTML = f.map(p => `<div class="product-card" onclick="openModal(${p.id})"><div class="product-image">${p.image?`<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`:''}<span class="fallback-emoji" style="font-size:64px;${p.image?'display:none;':''}">${p.fallbackEmoji}</span></div><div class="product-info"><h3 class="product-title">${p.name}</h3><p class="product-specs">${p.specs}</p><div class="price-section"><span class="price">${formatter.format(p.price)}</span><span class="interest-badge">${p.interest}</span></div><button class="add-to-cart-btn" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button></div></div>`).join('');
         }
 
-        // ==================== MODAL ====================
         window.openModal = function(id) {
-            const p = products.find(p => p.id === id);
+            const p = products.find(x => x.id === id);
             if (!p) return;
-            document.getElementById('modalContent').innerHTML = `
-                <div class="modal-image">
-                    ${p.image ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">` : ''}
-                    <span class="fallback-emoji" style="font-size: 120px; ${p.image ? 'display: none;' : ''}">${p.fallbackEmoji}</span>
-                </div>
-                <div class="modal-details">
-                    <h2>${p.name}</h2>
-                    <p class="modal-specs">${p.fullDescription}</p>
-                    <div class="modal-price">${formatter.format(p.price)}</div>
-                    <div><span class="interest-badge">${p.interest}</span></div>
-                    <div class="quantity-selector">
-                        <button class="quantity-btn" onclick="window.modalQty = Math.max(1, (window.modalQty || 1) - 1); document.getElementById('modalQty').value = window.modalQty;">-</button>
-                        <input type="number" id="modalQty" class="quantity-input" value="1" min="1" onchange="window.modalQty = parseInt(this.value)">
-                        <button class="quantity-btn" onclick="window.modalQty = (window.modalQty || 1) + 1; document.getElementById('modalQty').value = window.modalQty;">+</button>
-                    </div>
-                    <button class="modal-add-btn" onclick="addToCart(${p.id}, window.modalQty || 1); closeModal()">Add to Cart</button>
-                </div>
-            `;
+            document.getElementById('modalContent').innerHTML = `<div class="modal-image">${p.image?`<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`:''}<span class="fallback-emoji" style="font-size:120px;${p.image?'display:none;':''}">${p.fallbackEmoji}</span></div><div class="modal-details"><h2>${p.name}</h2><p class="modal-specs">${p.fullDescription}</p><div class="modal-price">${formatter.format(p.price)}</div><div><span class="interest-badge">${p.interest}</span></div><div class="quantity-selector"><button class="quantity-btn" onclick="window.modalQty=Math.max(1,(window.modalQty||1)-1);document.getElementById('modalQty').value=window.modalQty;">-</button><input type="number" id="modalQty" class="quantity-input" value="1" min="1" onchange="window.modalQty=parseInt(this.value)"><button class="quantity-btn" onclick="window.modalQty=(window.modalQty||1)+1;document.getElementById('modalQty').value=window.modalQty;">+</button></div><button class="modal-add-btn" onclick="addToCart(${p.id},window.modalQty||1);closeModal()">Add to Cart</button></div>`;
             window.modalQty = 1;
             document.getElementById('modalOverlay').classList.add('active');
         };
-
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
 
-        // ==================== CART ====================
         window.addToCart = function(id, qty = 1) {
-            const p = products.find(p => p.id === id);
-            const existing = cart.find(i => i.id === id);
-            if (existing) existing.quantity += qty;
-            else cart.push({ ...p, quantity: qty });
-            saveCart(); updateCartUI();
-            trackVisit('home', 'add_to_cart');
+            const p = products.find(x => x.id === id);
+            const ex = cart.find(i => i.id === id);
+            if (ex) ex.quantity += qty; else cart.push({ ...p, quantity: qty });
+            saveCart(); updateCartUI(); trackVisit('home', 'add_to_cart');
         };
-
         window.removeFromCart = function(id) { cart = cart.filter(i => i.id !== id); saveCart(); updateCartUI(); };
-
-        window.updateQuantity = function(id, change) {
-            const item = cart.find(i => i.id === id);
-            if (item) { item.quantity += change; if (item.quantity <= 0) removeFromCart(id); else { saveCart(); updateCartUI(); } }
+        window.updateQuantity = function(id, ch) {
+            const it = cart.find(i => i.id === id);
+            if (it) { it.quantity += ch; if (it.quantity <= 0) removeFromCart(id); else { saveCart(); updateCartUI(); } }
         };
-
         function saveCart() { localStorage.setItem('zippcart', JSON.stringify(cart)); }
-
         function updateCartUI() {
             document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.quantity, 0);
-            const itemsDiv = document.getElementById('cartItems');
-            if (cart.length === 0) {
-                itemsDiv.innerHTML = '<div class="empty-cart-message">Your cart is empty</div>';
-                document.getElementById('cartTotal').textContent = formatter.format(0);
-                return;
-            }
-            itemsDiv.innerHTML = cart.map(i => `
-                <div class="cart-item">
-                    <div class="cart-item-info">
-                        <h4>${i.name}</h4><span class="cart-item-price">${formatter.format(i.price)}</span>
-                        <div style="display:flex;gap:8px;margin-top:8px;">
-                            <button onclick="updateQuantity(${i.id}, -1)" style="padding:4px 8px;">-</button>
-                            <span>${i.quantity}</span>
-                            <button onclick="updateQuantity(${i.id}, 1)" style="padding:4px 8px;">+</button>
-                        </div>
-                    </div>
-                    <span class="cart-item-remove" onclick="removeFromCart(${i.id})">🗑️</span>
-                </div>
-            `).join('');
+            const d = document.getElementById('cartItems');
+            if (!cart.length) { d.innerHTML = '<div class="empty-cart-message">Your cart is empty</div>'; document.getElementById('cartTotal').textContent = formatter.format(0); return; }
+            d.innerHTML = cart.map(i => `<div class="cart-item"><div class="cart-item-info"><h4>${i.name}</h4><span class="cart-item-price">${formatter.format(i.price)}</span><div style="display:flex;gap:8px;margin-top:8px;"><button onclick="updateQuantity(${i.id},-1)" style="padding:4px 8px;">-</button><span>${i.quantity}</span><button onclick="updateQuantity(${i.id},1)" style="padding:4px 8px;">+</button></div></div><span class="cart-item-remove" onclick="removeFromCart(${i.id})">🗑️</span></div>`).join('');
             document.getElementById('cartTotal').textContent = formatter.format(cart.reduce((s, i) => s + (i.price * i.quantity), 0));
         }
 
-        // ==================== CHECKOUT ====================
         function renderCheckoutSummary() {
-            const itemsDiv = document.getElementById('summaryItems');
-            const totalSpan = document.getElementById('summaryTotal');
-            if (cart.length === 0) { itemsDiv.innerHTML = '<p style="color:#999;">Your cart is empty</p>'; totalSpan.textContent = formatter.format(0); return; }
-            let html = '', total = 0;
-            cart.forEach(i => { const it = i.price * i.quantity; total += it; html += `<div style="display:flex;justify-content:space-between;padding:8px 0;"><span>${i.quantity}x ${i.name.substring(0,20)}...</span><span>${formatter.format(it)}</span></div>`; });
-            html += `<div style="display:flex;justify-content:space-between;padding:8px 0;"><span>Delivery Fee</span><span>${formatter.format(5)}</span></div>`;
-            total += 5;
-            itemsDiv.innerHTML = html;
-            totalSpan.textContent = formatter.format(total);
+            const d = document.getElementById('summaryItems'), t = document.getElementById('summaryTotal');
+            if (!cart.length) { d.innerHTML = '<p style="color:#999;">Your cart is empty</p>'; t.textContent = formatter.format(0); return; }
+            let h = '', total = 0;
+            cart.forEach(i => { const it = i.price * i.quantity; total += it; h += `<div style="display:flex;justify-content:space-between;padding:8px 0;"><span>${i.quantity}x ${i.name.substring(0,20)}...</span><span>${formatter.format(it)}</span></div>`; });
+            h += `<div style="display:flex;justify-content:space-between;padding:8px 0;"><span>Delivery Fee</span><span>${formatter.format(5)}</span></div>`; total += 5;
+            d.innerHTML = h; t.textContent = formatter.format(total);
         }
 
-        // ==================== EVENT LISTENERS ====================
-        document.getElementById('cartIcon').addEventListener('click', () => {
-            document.getElementById('cartOverlay').classList.add('active');
-            document.getElementById('cartSidebar').classList.add('active');
-        });
-        document.getElementById('closeCart').addEventListener('click', () => {
-            document.getElementById('cartOverlay').classList.remove('active');
-            document.getElementById('cartSidebar').classList.remove('active');
-        });
-        document.getElementById('cartOverlay').addEventListener('click', () => {
-            document.getElementById('cartOverlay').classList.remove('active');
-            document.getElementById('cartSidebar').classList.remove('active');
-        });
+        document.getElementById('cartIcon').addEventListener('click', () => { document.getElementById('cartOverlay').classList.add('active'); document.getElementById('cartSidebar').classList.add('active'); });
+        document.getElementById('closeCart').addEventListener('click', () => { document.getElementById('cartOverlay').classList.remove('active'); document.getElementById('cartSidebar').classList.remove('active'); });
+        document.getElementById('cartOverlay').addEventListener('click', () => { document.getElementById('cartOverlay').classList.remove('active'); document.getElementById('cartSidebar').classList.remove('active'); });
         document.getElementById('modalClose').addEventListener('click', closeModal);
-        document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
-        
-        // Checkout button with login check
+        document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
+
         document.getElementById('checkoutBtn').addEventListener('click', () => {
-            if (cart.length === 0) { alert('Cart is empty!'); return; }
+            if (!cart.length) { alert('Cart is empty!'); return; }
             document.getElementById('cartOverlay').classList.remove('active');
             document.getElementById('cartSidebar').classList.remove('active');
-            if (!currentUser) {
-                alert('⚠️ Please sign in or create an account to proceed to checkout.');
-                showAuthModal();
-                return;
-            }
+            if (!currentUser) { alert('⚠️ Please sign in or create an account to proceed to checkout.'); showAuthModal(); return; }
             navigateTo('checkout');
         });
 
-        document.getElementById('searchInput').addEventListener('input', (e) => { searchQuery = e.target.value; renderProducts(); });
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const f = btn.textContent.toLowerCase();
+        document.getElementById('searchInput').addEventListener('input', e => { searchQuery = e.target.value; renderProducts(); });
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                const f = b.textContent.toLowerCase();
                 if (f.includes('all')) currentFilter = 'all';
                 else if (f.includes('full hd')) currentFilter = 'full-hd';
                 else if (f.includes('hd ready')) currentFilter = 'hd-ready';
@@ -761,68 +585,85 @@
             });
         });
 
-        // Place Order - Requires Login
-        document.getElementById('placeOrderBtn').addEventListener('click', () => {
-            if (!currentUser) {
-                alert('⚠️ Please sign in to place your order.');
-                showAuthModal();
-                return;
-            }
-            if (cart.length === 0) { alert('Cart is empty!'); return; }
-            requireLogin(async () => {
-                const customerInfo = {
-                    firstName: document.getElementById('firstName').value,
-                    lastName: document.getElementById('lastName').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    address: document.getElementById('address').value
-                };
-                const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-                const result = await placeOrderAPI(cart, customerInfo, paymentMethod);
-                alert(`✅ ${result.message}\n\nOrder #${result.order?.orderNumber || 'N/A'}`);
-                cart = []; saveCart(); updateCartUI(); navigateTo('home');
-            });
+        document.getElementById('placeOrderBtn').addEventListener('click', async () => {
+            if (!currentUser) { alert('⚠️ Please sign in to place your order.'); showAuthModal(); return; }
+            if (!cart.length) { alert('Cart is empty!'); return; }
+            const ci = { firstName: document.getElementById('firstName').value, lastName: document.getElementById('lastName').value, email: document.getElementById('email').value, phone: document.getElementById('phone').value, address: document.getElementById('address').value };
+            const pm = document.querySelector('input[name="payment"]:checked').value;
+            const r = await placeOrderAPI(cart, ci, pm);
+            alert(`✅ ${r.message}\n\nOrder #${r.order?.orderNumber || 'N/A'}`);
+            cart = []; saveCart(); updateCartUI(); navigateTo('home');
         });
 
-        // Payment toggle
-        document.querySelectorAll('input[name="payment"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+        document.querySelectorAll('input[name="payment"]').forEach(r => {
+            r.addEventListener('change', e => {
+                document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
                 e.target.closest('.payment-option').classList.add('selected');
                 document.getElementById('momoDetails').classList.toggle('active', e.target.value === 'momo');
             });
         });
 
-        // Seller Form
-        document.getElementById('sellerForm').addEventListener('submit', async (e) => {
+        document.getElementById('sellerForm').addEventListener('submit', async e => {
             e.preventDefault();
-            const formData = {
-                businessName: e.target.querySelector('input[placeholder="Your shop name"]').value,
-                businessType: e.target.querySelector('select').value,
-                contactPerson: e.target.querySelector('input[placeholder="Full name"]').value,
-                phone: e.target.querySelector('input[type="tel"]').value,
-                email: e.target.querySelector('input[type="email"]').value,
-                products: e.target.querySelector('textarea').value,
-                monthlySales: 'Less than 50 items'
-            };
+            const fd = { businessName: e.target.querySelector('input[placeholder="Your shop name"]').value, businessType: e.target.querySelector('select').value, contactPerson: e.target.querySelector('input[placeholder="Full name"]').value, phone: e.target.querySelector('input[type="tel"]').value, email: e.target.querySelector('input[type="email"]').value, products: e.target.querySelector('textarea').value, monthlySales: 'Less than 50 items' };
             try {
-                const res = await fetch('https://zippcart-api.onrender.com/api/seller/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
-                const data = await res.json();
-                alert(data.message);
-            } catch (error) {
-                alert('Connection error. Please try again.');
-            }
+                const r = await fetch('https://zippcart-api.onrender.com/api/seller/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fd) });
+                const d = await r.json(); alert(d.message);
+            } catch (x) { alert('Connection error.'); }
         });
 
-        // ==================== INIT ====================
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('currentTime').textContent = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        // ==================== ADMIN ====================
+        async function loadAdminDashboard() {
+            try {
+                const r = await fetch('https://zippcart-api.onrender.com/api/admin/stats', { headers: { 'Authorization': `Bearer ${authToken}` } });
+                const s = await r.json();
+                document.getElementById('statVisitors').textContent = s.visitors || 0;
+                document.getElementById('statOrders').textContent = s.orders || 0;
+                document.getElementById('statRevenue').textContent = '₵' + (s.revenue || 0).toFixed(2);
+                document.getElementById('statPending').textContent = s.pendingSellers || 0;
+            } catch (e) { console.log(e); }
         }
+        async function loadPendingSellers() {
+            try {
+                const r = await fetch('https://zippcart-api.onrender.com/api/admin/pending-sellers', { headers: { 'Authorization': `Bearer ${authToken}` } });
+                const s = await r.json();
+                const l = document.getElementById('pendingSellersList');
+                if (!s.length) { l.innerHTML = '<p style="color:#999;">No pending sellers</p>'; return; }
+                l.innerHTML = s.map(x => `<div style="display:flex;justify-content:space-between;align-items:center;padding:16px;border:1px solid #e5e5e5;border-radius:8px;"><div><strong>${x.businessName||'N/A'}</strong><p style="color:#777;font-size:14px;">${x.name} • ${x.email} • ${x.phone||'N/A'}</p><p style="color:#777;font-size:13px;">Products: ${x.products||'N/A'}</p></div><div style="display:flex;gap:8px;"><button onclick="approveSeller('${x._id}')" style="padding:8px 16px;background:#28a745;color:white;border:none;border-radius:6px;cursor:pointer;">✅ Approve</button><button onclick="rejectSeller('${x._id}')" style="padding:8px 16px;background:#dc3545;color:white;border:none;border-radius:6px;cursor:pointer;">❌ Reject</button></div></div>`).join('');
+            } catch (e) { console.log(e); }
+        }
+        async function approveSeller(id) {
+            try {
+                const r = await fetch(`https://zippcart-api.onrender.com/api/admin/seller/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` }, body: JSON.stringify({ status: 'active' }) });
+                const d = await r.json(); alert('✅ ' + d.message); loadPendingSellers(); loadAdminDashboard();
+            } catch (e) { alert('Error'); }
+        }
+        async function rejectSeller(id) {
+            try {
+                const r = await fetch(`https://zippcart-api.onrender.com/api/admin/seller/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` }, body: JSON.stringify({ status: 'rejected' }) });
+                const d = await r.json(); alert('❌ ' + d.message); loadPendingSellers(); loadAdminDashboard();
+            } catch (e) { alert('Error'); }
+        }
+        async function loadRecentOrders() {
+            try {
+                const r = await fetch('https://zippcart-api.onrender.com/api/admin/orders', { headers: { 'Authorization': `Bearer ${authToken}` } });
+                const o = await r.json();
+                const t = document.getElementById('ordersTableBody');
+                if (!o.length) { t.innerHTML = '<tr><td colspan="7" style="padding:24px;text-align:center;color:#999;">No orders yet</td></tr>'; return; }
+                t.innerHTML = o.map(x => `<tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:12px;font-weight:600;">#${x.orderNumber}</td><td style="padding:12px;">${x.customerInfo?.firstName||'N/A'}</td><td style="padding:12px;">${x.items?.length||0} items</td><td style="padding:12px;font-weight:600;">₵${(x.total||0).toFixed(2)}</td><td style="padding:12px;">${x.paymentMethod||'N/A'}</td><td style="padding:12px;"><span style="padding:4px 10px;border-radius:20px;background:${x.status==='pending'?'#fff3cd':'#d4edda'};color:${x.status==='pending'?'#856404':'#155724'};font-size:12px;font-weight:600;">${x.status}</span></td><td style="padding:12px;font-size:13px;color:#777;">${new Date(x.createdAt).toLocaleDateString()}</td></tr>`).join('');
+            } catch (e) { console.log(e); }
+        }
+        async function loadVisitorLog() {
+            try {
+                const r = await fetch('https://zippcart-api.onrender.com/api/admin/visitors', { headers: { 'Authorization': `Bearer ${authToken}` } });
+                const v = await r.json();
+                const l = document.getElementById('visitorLog');
+                if (!v.length) { l.innerHTML = '<p style="color:#999;">No visitors yet</p>'; return; }
+                l.innerHTML = v.map(x => `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;"><span>📍 ${x.page} — ${x.action}</span><span style="color:#999;">${new Date(x.timestamp).toLocaleString()}</span></div>`).join('');
+            } catch (e) { console.log(e); }
+        }
+
+        function updateTime() { const n = new Date(); document.getElementById('currentTime').textContent = `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`; }
         updateTime(); setInterval(updateTime, 1000);
         renderProducts(); updateCartUI(); updateAuthUI();
         trackVisit('home', 'page_view');
