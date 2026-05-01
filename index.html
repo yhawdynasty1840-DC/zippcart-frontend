@@ -196,12 +196,46 @@
             color: #777; border-top: 1px solid #e5e5e5; margin-top: 48px;
         }
         .no-results { text-align: center; padding: 48px; color: #999; }
+
+        /* ==================== MOBILE RESPONSIVE ==================== */
         @media (max-width: 768px) {
             .nav { display: none; }
-            .hero h1 { font-size: 28px; }
+            .hero h1 { font-size: 26px; }
+            .hero p { font-size: 14px; }
             .cart-sidebar { max-width: 100%; }
-            .search-input { width: 180px; }
+            .search-input { width: 140px; font-size: 13px; }
             .checkout-grid, .modal-content, .form-row { grid-template-columns: 1fr; }
+            .header { padding: 12px 16px; }
+            .header-right { gap: 8px; }
+            .container { padding: 16px; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .product-image { height: 160px; }
+            .product-image .fallback-emoji { font-size: 40px; }
+            .product-info { padding: 12px; }
+            .product-title { font-size: 13px; }
+            .product-specs { font-size: 11px; }
+            .price { font-size: 18px; }
+            .add-to-cart-btn { padding: 8px; font-size: 12px; }
+            .filter-bar { gap: 8px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+            .filter-btn { white-space: nowrap; font-size: 12px; padding: 8px 14px; }
+            .modal { width: 95%; margin: 16px; }
+            .modal-content { padding: 16px; gap: 16px; }
+            .modal-image { min-height: 200px; }
+            .modal-image .fallback-emoji { font-size: 60px; }
+            .modal-details h2 { font-size: 20px; }
+            .modal-price { font-size: 24px; }
+            .logo { font-size: 18px; }
+        }
+        @media (max-width: 480px) {
+            .search-input { width: 100px; font-size: 11px; }
+            .header { padding: 8px 10px; }
+            .header-right { gap: 4px; }
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .product-image { height: 130px; }
+            .price { font-size: 16px; }
+            .product-info { padding: 8px; }
+            .hero { padding: 32px 16px; }
+            .hero h1 { font-size: 22px; }
         }
     </style>
 </head>
@@ -449,6 +483,21 @@
         let authMode = 'login';
 
         function showAuthModal() {
+            authMode = 'login';
+            document.getElementById('authTitle').textContent = 'Sign In';
+            document.getElementById('authSubmitBtn').textContent = 'Sign In';
+            document.getElementById('nameField').style.display = 'none';
+            document.getElementById('authToggleLink').textContent = 'Create an account';
+            document.getElementById('authModalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showSignupModal() {
+            authMode = 'signup';
+            document.getElementById('authTitle').textContent = 'Create Account';
+            document.getElementById('authSubmitBtn').textContent = 'Create Account';
+            document.getElementById('nameField').style.display = 'block';
+            document.getElementById('authToggleLink').textContent = 'Already have an account? Sign in';
             document.getElementById('authModalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -459,11 +508,11 @@
         }
 
         function toggleAuthMode() {
-            authMode = authMode === 'login' ? 'signup' : 'login';
-            document.getElementById('authTitle').textContent = authMode === 'login' ? 'Sign In' : 'Create Account';
-            document.getElementById('authSubmitBtn').textContent = authMode === 'login' ? 'Sign In' : 'Create Account';
-            document.getElementById('nameField').style.display = authMode === 'signup' ? 'block' : 'none';
-            document.getElementById('authToggleLink').textContent = authMode === 'login' ? 'Create an account' : 'Already have an account? Sign in';
+            if (authMode === 'login') {
+                showSignupModal();
+            } else {
+                showAuthModal();
+            }
         }
 
         async function handleAuth(event) {
@@ -488,11 +537,22 @@
                     alert(data.message);
                 }
             } catch (error) {
-                alert('Connection error. Is the server running?');
+                alert('Connection error. Please try again.');
             }
         }
 
-        // ==================== API HELPERS ====================
+        // ==================== CHECKOUT WITH LOGIN CHECK ====================
+        function requireLogin(callback) {
+            if (currentUser) {
+                callback();
+            } else {
+                alert('⚠️ Please sign in or create an account to place an order.');
+                showAuthModal();
+                // Store the callback to run after login
+                window._afterLoginCallback = callback;
+            }
+        }
+
         async function placeOrderAPI(cartData, customerInfo, paymentMethod) {
             const total = cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 5;
             const items = cartData.map(item => ({ name: item.name, price: item.price, quantity: item.quantity }));
@@ -673,12 +733,20 @@
         });
         document.getElementById('modalClose').addEventListener('click', closeModal);
         document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
+        
+        // Checkout button with login check
         document.getElementById('checkoutBtn').addEventListener('click', () => {
             if (cart.length === 0) { alert('Cart is empty!'); return; }
             document.getElementById('cartOverlay').classList.remove('active');
             document.getElementById('cartSidebar').classList.remove('active');
+            if (!currentUser) {
+                alert('⚠️ Please sign in or create an account to proceed to checkout.');
+                showAuthModal();
+                return;
+            }
             navigateTo('checkout');
         });
+
         document.getElementById('searchInput').addEventListener('input', (e) => { searchQuery = e.target.value; renderProducts(); });
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -693,20 +761,27 @@
             });
         });
 
-        // Place Order
-        document.getElementById('placeOrderBtn').addEventListener('click', async () => {
+        // Place Order - Requires Login
+        document.getElementById('placeOrderBtn').addEventListener('click', () => {
+            if (!currentUser) {
+                alert('⚠️ Please sign in to place your order.');
+                showAuthModal();
+                return;
+            }
             if (cart.length === 0) { alert('Cart is empty!'); return; }
-            const customerInfo = {
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                address: document.getElementById('address').value
-            };
-            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-            const result = await placeOrderAPI(cart, customerInfo, paymentMethod);
-            alert(`✅ ${result.message}\n\nOrder #${result.order?.orderNumber || 'N/A'}`);
-            cart = []; saveCart(); updateCartUI(); navigateTo('home');
+            requireLogin(async () => {
+                const customerInfo = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value
+                };
+                const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+                const result = await placeOrderAPI(cart, customerInfo, paymentMethod);
+                alert(`✅ ${result.message}\n\nOrder #${result.order?.orderNumber || 'N/A'}`);
+                cart = []; saveCart(); updateCartUI(); navigateTo('home');
+            });
         });
 
         // Payment toggle
@@ -739,7 +814,7 @@
                 const data = await res.json();
                 alert(data.message);
             } catch (error) {
-                alert('Connection error. Is the server running?');
+                alert('Connection error. Please try again.');
             }
         });
 
