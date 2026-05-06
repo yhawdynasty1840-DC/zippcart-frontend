@@ -865,10 +865,33 @@
         async function clearVisitors() { if (!confirm('Delete ALL visitor logs? This cannot be undone.')) return; try { await fetch(`${API_URL}/admin/visitors`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${authToken}` } }); loadVisitorLog(); loadAdminDashboard(); alert('✅ All visitor logs cleared'); } catch(e) { alert('Error'); } }
         async function clearOrders() { if (!confirm('Delete ALL orders? This cannot be undone.')) return; try { await fetch(`${API_URL}/admin/orders`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${authToken}` } }); loadRecentOrders(); loadAdminDashboard(); alert('✅ All orders cleared'); } catch(e) { alert('Error'); } }
 
-        function updateTime() { const n = new Date(); document.getElementById('currentTime').textContent = `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`; }
-        updateTime(); setInterval(updateTime, 1000);
-        renderProducts(); updateCartUI(); updateAuthUI();
-        trackVisit('home', 'page_view');
+       function updateTime() { const n = new Date(); document.getElementById('currentTime').textContent = `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`; }
+updateTime(); setInterval(updateTime, 1000);
+
+// Force home page to be active and render products immediately
+document.addEventListener('DOMContentLoaded', function() {
+    // Ensure home page is visible
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const homePage = document.getElementById('page-home');
+    if (homePage) homePage.classList.add('active');
+    
+    // Render products
+    renderProducts();
+    updateCartUI();
+    updateAuthUI();
+    trackVisit('home', 'page_view');
+});
+
+// Also run immediately in case DOM is already loaded
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const homePage = document.getElementById('page-home');
+    if (homePage) homePage.classList.add('active');
+    renderProducts();
+    updateCartUI();
+    updateAuthUI();
+    trackVisit('home', 'page_view');
+}
     </script>
 </body>
 </html>
