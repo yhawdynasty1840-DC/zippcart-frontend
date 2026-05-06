@@ -284,11 +284,14 @@
         </div>
     </header>
 
+    <!-- HOME PAGE - Products load here immediately -->
     <div class="page active" id="page-home">
         <section class="hero"><div class="hero-content"><h1>The fastest way to fill your cart</h1><p>Just zip, click, and it's at your door. Smart shopping for Ghana.</p></div></section>
         <div class="container">
             <div class="filter-bar"><button class="filter-pill active" data-filter="all">All</button><button class="filter-pill" data-filter="full-hd">Full HD</button><button class="filter-pill" data-filter="hd-ready">HD Ready</button><button class="filter-pill" data-filter="4k-uhd">4K</button></div>
-            <div class="product-grid" id="productGrid"></div>
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be rendered here by JavaScript -->
+            </div>
         </div>
     </div>
 
@@ -344,13 +347,13 @@
     <footer class="footer"><p>ZIPPCART is a modern online shopping center for speed and convenience.</p><p style="margin-top:4px;">© 2024 Zippcart. Smart shopping for Ghana.</p></footer>
 
     <script>
+        // ==================== CONFIGURATION ====================
         const API_URL = 'https://zippcart-api.onrender.com/api';
         
         // ==================== AUTH - LOAD FROM LOCAL STORAGE ====================
         let authToken = localStorage.getItem('zippcart_token') || '';
         let currentUser = null;
         
-        // Restore user from localStorage
         try {
             const savedUser = localStorage.getItem('zippcart_user');
             if (savedUser && savedUser !== 'null' && savedUser !== 'undefined') {
@@ -361,10 +364,12 @@
             localStorage.removeItem('zippcart_user');
         }
 
+        // ==================== SIDEBAR ====================
         function openSidebar() { document.getElementById('sidebar').classList.add('active'); document.getElementById('sidebarOverlay').classList.add('active'); }
         function closeSidebar() { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
         document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
 
+        // ==================== AUTH FUNCTIONS ====================
         function setAuth(token, user) {
             authToken = token;
             currentUser = user;
@@ -406,9 +411,11 @@
         function toggleAuthMode() { authMode = authMode === 'login' ? 'signup' : 'login'; document.getElementById('authTitle').textContent = authMode === 'login' ? 'Sign In' : 'Create Account'; document.getElementById('authSubmitBtn').textContent = authMode === 'login' ? 'Sign In' : 'Create Account'; document.getElementById('nameField').style.display = authMode === 'signup' ? 'block' : 'none'; document.getElementById('authToggleLink').textContent = authMode === 'login' ? 'Create an account' : 'Already have an account? Sign in'; }
         async function handleAuth(e) { e.preventDefault(); const email = document.getElementById('authEmail').value, password = document.getElementById('authPassword').value, name = document.getElementById('authName').value; const ep = authMode === 'login' ? '/login' : '/signup'; const body = authMode === 'login' ? { email, password } : { name, email, password }; try { const r = await fetch(`${API_URL}${ep}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); const d = await r.json(); if (r.ok) { setAuth(d.token, d.user); closeAuthModal(); alert(d.message); } else alert(d.message); } catch (x) { alert('Connection error.'); } }
 
+        // ==================== API HELPERS ====================
         async function placeOrderAPI(cd, ci, pm) { const total = cd.reduce((s, i) => s + (i.price * i.quantity), 0) + 5; const items = cd.map(i => ({ name: i.name, price: i.price, quantity: i.quantity })); try { const h = { 'Content-Type': 'application/json' }; if (authToken) h['Authorization'] = `Bearer ${authToken}`; const r = await fetch(`${API_URL}/orders`, { method: 'POST', headers: h, body: JSON.stringify({ items, total, paymentMethod: pm, customerInfo: ci }) }); return await r.json(); } catch (x) { return { message: 'Connection error' }; } }
         function trackVisit(pg, ac) { fetch(`${API_URL}/track`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ page: pg, action: ac }) }).catch(() => {}); }
 
+        // ==================== PRODUCT DATA ====================
         const products = [
             { id: 1, name: "SMOKOLAB 1.83 inch HD Smartwatch", specs: "BT Calling & Check Weather", fullDescription: "Vibrant 1.83-inch HD display with Bluetooth calling, weather, heart rate & sleep tracking.", price: 11.47, interest: "2.80% free", image: "", fallbackEmoji: "⌚", category: "full-hd" },
             { id: 2, name: "Flat Polycarbonate Rotatable Enclosure", specs: "Dual-Sided Screen • Cable-Free", fullDescription: "Premium rotatable enclosure with four dual-sided screens.", price: 11.39, interest: "0.38% free", image: "", fallbackEmoji: "📱", category: "hd-ready" },
@@ -418,10 +425,12 @@
             { id: 6, name: "Portable Power Bank 20000mAh", specs: "Fast Charging • Dual USB", fullDescription: "High-capacity 20000mAh power bank.", price: 19.99, interest: "0% free", image: "", fallbackEmoji: "🔋", category: "hd-ready" }
         ];
 
+        // ==================== CART STATE ====================
         let cart = JSON.parse(localStorage.getItem('zippcart')) || [];
         let currentFilter = 'all', searchQuery = '';
         const fmt = new Intl.NumberFormat('en-GH', { style: 'currency', currency: 'GHS' });
 
+        // ==================== NAVIGATION ====================
         function navigateTo(pg) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(`page-${pg}`).classList.add('active');
@@ -435,10 +444,20 @@
             trackVisit(pg, 'page_view');
         }
 
-        function renderProducts() { const f = products.filter(p => (currentFilter === 'all' || p.category === currentFilter) && p.name.toLowerCase().includes(searchQuery.toLowerCase())); const g = document.getElementById('productGrid'); if (!f.length) { g.innerHTML = '<div style="text-align:center;padding:40px;color:var(--gray);">No products found</div>'; return; } g.innerHTML = f.map(p => `<div class="product-card" onclick="openModal(${p.id})"><div class="product-image">${p.image?`<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`:''}<span class="fallback-emoji" style="font-size:48px;${p.image?'display:none;':''}">${p.fallbackEmoji}</span></div><div class="product-info"><h3 class="product-title">${p.name}</h3><p class="product-specs">${p.specs}</p><div class="price-row"><span class="price">${fmt.format(p.price)}</span><span class="interest-badge">${p.interest}</span></div><button class="btn-add-cart" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button></div></div>`).join(''); }
+        // ==================== RENDER PRODUCTS ====================
+        function renderProducts() {
+            const f = products.filter(p => (currentFilter === 'all' || p.category === currentFilter) && p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            const g = document.getElementById('productGrid');
+            if (!g) return;
+            if (!f.length) { g.innerHTML = '<div style="text-align:center;padding:40px;color:var(--gray);">No products found</div>'; return; }
+            g.innerHTML = f.map(p => `<div class="product-card" onclick="openModal(${p.id})"><div class="product-image">${p.image?`<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`:''}<span class="fallback-emoji" style="font-size:48px;${p.image?'display:none;':''}">${p.fallbackEmoji}</span></div><div class="product-info"><h3 class="product-title">${p.name}</h3><p class="product-specs">${p.specs}</p><div class="price-row"><span class="price">${fmt.format(p.price)}</span><span class="interest-badge">${p.interest}</span></div><button class="btn-add-cart" onclick="event.stopPropagation();addToCart(${p.id})">Add to Cart</button></div></div>`).join('');
+        }
+
+        // ==================== MODAL ====================
         window.openModal = function(id) { const p = products.find(x => x.id === id); if (!p) return; document.getElementById('modalContent').innerHTML = `<div class="modal-image">${p.image?`<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`:''}<span class="fallback-emoji" style="font-size:80px;${p.image?'display:none;':''}">${p.fallbackEmoji}</span></div><div class="modal-details"><h2>${p.name}</h2><p class="modal-specs">${p.fullDescription}</p><div class="modal-price">${fmt.format(p.price)}</div><div class="quantity-selector"><button class="qty-btn" onclick="window.mq=Math.max(1,(window.mq||1)-1);document.getElementById('mq').value=window.mq;">−</button><input type="number" id="mq" class="qty-input" value="1" min="1" onchange="window.mq=parseInt(this.value)"><button class="qty-btn" onclick="window.mq=(window.mq||1)+1;document.getElementById('mq').value=window.mq;">+</button></div><button class="btn-modal-add" onclick="addToCart(${p.id},window.mq||1);closeModal()">Add to Cart</button></div>`; window.mq = 1; document.getElementById('modalOverlay').classList.add('active'); };
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
 
+        // ==================== CART FUNCTIONS ====================
         window.addToCart = function(id, q=1) { const p = products.find(x => x.id === id); const ex = cart.find(i => i.id === id); if (ex) ex.quantity += q; else cart.push({ ...p, quantity: q }); saveCart(); updateCartUI(); trackVisit('home','add_to_cart'); };
         window.removeFromCart = function(id) { cart = cart.filter(i => i.id !== id); saveCart(); updateCartUI(); };
         window.updateQuantity = function(id, ch) { const it = cart.find(i => i.id === id); if (it) { it.quantity += ch; if (it.quantity <= 0) removeFromCart(id); else { saveCart(); updateCartUI(); } } };
@@ -446,6 +465,7 @@
         function updateCartUI() { document.getElementById('cartCount').textContent = cart.reduce((s, i) => s + i.quantity, 0); const d = document.getElementById('cartItems'); if (!cart.length) { d.innerHTML = '<div class="empty-cart-message">Your cart is empty</div>'; document.getElementById('cartTotal').textContent = fmt.format(0); return; } d.innerHTML = cart.map(i => `<div class="cart-item"><div class="cart-item-info"><h4>${i.name}</h4><span class="cart-item-price">${fmt.format(i.price)}</span><div style="display:flex;gap:6px;margin-top:6px;"><button onclick="updateQuantity(${i.id},-1)" style="padding:3px 8px;">-</button><span>${i.quantity}</span><button onclick="updateQuantity(${i.id},1)" style="padding:3px 8px;">+</button></div></div><span class="cart-item-remove" onclick="removeFromCart(${i.id})">🗑️</span></div>`).join(''); document.getElementById('cartTotal').textContent = fmt.format(cart.reduce((s, i) => s + (i.price * i.quantity), 0)); }
         function renderCheckoutSummary() { const d = document.getElementById('summaryItems'), t = document.getElementById('summaryTotal'); if (!cart.length) { d.innerHTML = '<p style="color:var(--gray);">Empty</p>'; t.textContent = fmt.format(0); return; } let h = '', total = 0; cart.forEach(i => { const it = i.price * i.quantity; total += it; h += `<div style="display:flex;justify-content:space-between;padding:5px 0;"><span>${i.quantity}x ${i.name.substring(0,16)}</span><span>${fmt.format(it)}</span></div>`; }); h += `<div style="display:flex;justify-content:space-between;padding:5px 0;">Delivery Fee<span>${fmt.format(5)}</span></div>`; total += 5; d.innerHTML = h; t.textContent = fmt.format(total); }
 
+        // ==================== EVENT LISTENERS ====================
         document.getElementById('cartIcon').addEventListener('click', () => { document.getElementById('cartOverlay').classList.add('active'); document.getElementById('cartSidebar').classList.add('active'); });
         document.getElementById('closeCart').addEventListener('click', () => { document.getElementById('cartOverlay').classList.remove('active'); document.getElementById('cartSidebar').classList.remove('active'); });
         document.getElementById('cartOverlay').addEventListener('click', () => { document.getElementById('cartOverlay').classList.remove('active'); document.getElementById('cartSidebar').classList.remove('active'); });
@@ -458,25 +478,34 @@
         document.querySelectorAll('input[name="payment"]').forEach(r => r.addEventListener('change', e => { document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected')); e.target.closest('.payment-option').classList.add('selected'); document.getElementById('momoDetails').classList.toggle('active', e.target.value === 'momo'); }));
         document.getElementById('sellerForm').addEventListener('submit', async e => { e.preventDefault(); const fd = { businessName: e.target.querySelector('input[placeholder="Your shop name"]').value, businessType: e.target.querySelector('select').value, contactPerson: e.target.querySelector('input[placeholder="Full name"]').value, phone: e.target.querySelector('input[type="tel"]').value, email: e.target.querySelector('input[type="email"]').value, products: e.target.querySelector('textarea').value, monthlySales: 'Less than 50 items' }; try { const r = await fetch(`${API_URL}/seller/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fd) }); const d = await r.json(); alert(d.message); } catch (x) { alert('Error.'); } });
 
-        // ADMIN
+        // ==================== ADMIN FUNCTIONS ====================
         async function loadAdminDashboard() { try { const r = await fetch(`${API_URL}/admin/stats`, { headers: { 'Authorization': `Bearer ${authToken}` } }); const s = await r.json(); document.getElementById('statVisitors').textContent = s.visitors || 0; document.getElementById('statOrders').textContent = s.orders || 0; document.getElementById('statRevenue').textContent = '₵' + (s.revenue || 0).toFixed(2); document.getElementById('statPending').textContent = s.pendingSellers || 0; } catch(e){} }
         async function loadPendingSellers() { try { const r = await fetch(`${API_URL}/admin/pending-sellers`, { headers: { 'Authorization': `Bearer ${authToken}` } }); const s = await r.json(); const l = document.getElementById('pendingSellersList'); if (!s.length) { l.innerHTML = '<p style="color:var(--gray);">No pending sellers</p>'; return; } l.innerHTML = s.map(x => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid var(--border);border-radius:8px;"><div><strong>${x.businessName||'N/A'}</strong><p style="color:var(--gray);font-size:12px;">${x.name} • ${x.email}</p></div><div style="display:flex;gap:6px;"><button onclick="approveSeller('${x._id}')" style="padding:5px 12px;background:#16A34A;color:white;border:none;border-radius:6px;cursor:pointer;">Approve</button><button onclick="rejectSeller('${x._id}')" style="padding:5px 12px;background:#EF4444;color:white;border:none;border-radius:6px;cursor:pointer;">Reject</button></div></div>`).join(''); } catch(e){} }
         async function approveSeller(id) { try { await fetch(`${API_URL}/admin/seller/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` }, body: JSON.stringify({ status: 'active' }) }); loadPendingSellers(); loadAdminDashboard(); } catch(e){ alert('Error'); } }
         async function rejectSeller(id) { try { await fetch(`${API_URL}/admin/seller/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` }, body: JSON.stringify({ status: 'rejected' }) }); loadPendingSellers(); loadAdminDashboard(); } catch(e){ alert('Error'); } }
         async function loadRecentOrders() { try { const r = await fetch(`${API_URL}/admin/orders`, { headers: { 'Authorization': `Bearer ${authToken}` } }); const o = await r.json(); const t = document.getElementById('ordersTableBody'); if (!o.length) { t.innerHTML = '<tr><td colspan="7" style="padding:18px;text-align:center;color:var(--gray);">No orders</td></tr>'; return; } t.innerHTML = o.map(x => `<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px;font-weight:600;">#${x.orderNumber}</td><td style="padding:6px;">${x.customerInfo?.firstName||'N/A'}</td><td style="padding:6px;">${x.items?.length||0}</td><td style="padding:6px;font-weight:600;">₵${(x.total||0).toFixed(2)}</td><td style="padding:6px;">${x.paymentMethod||'N/A'}</td><td style="padding:6px;"><span style="padding:2px 7px;border-radius:12px;background:${x.status==='pending'?'#FEF3C7':'#DCFCE7'};color:${x.status==='pending'?'#92400E':'#166534'};font-size:10px;font-weight:600;">${x.status}</span></td><td style="padding:6px;font-size:11px;color:var(--gray);">${new Date(x.createdAt).toLocaleDateString()}</td></tr>`).join(''); } catch(e){} }
         async function loadVisitorLog() { try { const r = await fetch(`${API_URL}/admin/visitors`, { headers: { 'Authorization': `Bearer ${authToken}` } }); const v = await r.json(); const l = document.getElementById('visitorLog'); if (!v.length) { l.innerHTML = '<p style="color:var(--gray);">No visitors yet</p>'; return; } l.innerHTML = v.map(x => `<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;"><span>📍 ${x.page} — ${x.action}</span><span style="color:var(--gray);">${new Date(x.timestamp).toLocaleString()}</span></div>`).join(''); } catch(e){} }
-        async function clearVisitors() { if (!confirm('Delete ALL visitor logs? This cannot be undone.')) return; try { await fetch(`${API_URL}/admin/visitors`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${authToken}` } }); loadVisitorLog(); loadAdminDashboard(); alert('✅ All visitor logs cleared'); } catch(e) { alert('Error'); } }
-        async function clearOrders() { if (!confirm('Delete ALL orders? This cannot be undone.')) return; try { await fetch(`${API_URL}/admin/orders`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${authToken}` } }); loadRecentOrders(); loadAdminDashboard(); alert('✅ All orders cleared'); } catch(e) { alert('Error'); } }
+        async function clearVisitors() { if (!confirm('Delete ALL visitor logs?')) return; try { await fetch(`${API_URL}/admin/visitors`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${authToken}` } }); loadVisitorLog(); loadAdminDashboard(); alert('✅ Cleared'); } catch(e) { alert('Error'); } }
+        async function clearOrders() { if (!confirm('Delete ALL orders?')) return; try { await fetch(`${API_URL}/admin/orders`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${authToken}` } }); loadRecentOrders(); loadAdminDashboard(); alert('✅ Cleared'); } catch(e) { alert('Error'); } }
 
         function updateTime() { const n = new Date(); document.getElementById('currentTime').textContent = `${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`; }
 
-        // ==================== INIT - RUN IMMEDIATELY ====================
-        updateTime();
-        setInterval(updateTime, 1000);
-        renderProducts();
-        updateCartUI();
-        updateAuthUI();
-        trackVisit('home', 'page_view');
+        // ==================== FORCE HOME PAGE ON LOAD ====================
+        // This ensures the home page is active and products render immediately
+        (function initPage() {
+            // Force home page to be active
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const homePage = document.getElementById('page-home');
+            if (homePage) homePage.classList.add('active');
+            
+            // Render products
+            renderProducts();
+            updateCartUI();
+            updateAuthUI();
+            updateTime();
+            setInterval(updateTime, 1000);
+            trackVisit('home', 'page_view');
+        })();
     </script>
 </body>
 </html>
